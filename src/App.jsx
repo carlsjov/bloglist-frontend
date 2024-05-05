@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+//import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -8,7 +9,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrormessage] = useState(null)
+  //const [errorMessage, setErrormessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -24,7 +25,7 @@ const App = () => {
       const user = await loginService.login({
         username, password,
       })
-      setUsername(user)
+      setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -35,8 +36,9 @@ const App = () => {
     }
   }
 
-  const loginForm = () => {
-    <div>
+  if (user === null) {
+    return (
+      <div>
     <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
@@ -60,12 +62,11 @@ const App = () => {
         <button type="submit">login</button>
       </form>
     </div>
+    )
   }
-
+  
   return (
     <div>
-      <Notification message={errorMessage}/>
-      {!user && loginForm()}
       <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />

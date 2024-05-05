@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server -p3003",
+    "build:ui": "npm run build && cd ../webutu-part4 && @powershell Remove-Item -Recurse -Force dist && cd ../bloglist-frontend && @powershell Copy-Item dist -Recurse ../webutu-part4",
+    "deploy:full": "npm run build:ui && cd ../webutu-part4 && git add . && git commit -m newuibuild && git push"
   },
   "dependencies": {
     "axios": "^1.4.0",
