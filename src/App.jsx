@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-//import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -9,11 +9,12 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  //const [errorMessage, setErrormessage] = useState(null)
+  const [errorMessage, setErrormessage] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [likes, setLikes] = useState('')
+  const [errorCode, setErrorCode] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -49,8 +50,10 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setErrormessage('wrong username or password')
+      setErrorCode("1")
       setTimeout(() => {
         setErrormessage(null)
+        setErrorCode('')
       }, 5000)
     }
   }
@@ -83,11 +86,19 @@ const App = () => {
     setLikes('')
     setTitle('')
     setUrl('')
+
+    setErrorCode("2")
+    setErrormessage('Made new blog!')
+    setTimeout(() => {
+      setErrormessage(null)
+      setErrorCode('')
+    }, 5000)
   }
 
   if (user === null) {
     return (
       <div>
+    <Notification message={errorMessage} code={errorCode}/>
     <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
@@ -117,6 +128,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={errorMessage} code={errorCode}/>
       <p>{user.name} logged in</p>
       <form onSubmit={handleLogoff}>
         <button type="submit">logout</button>
