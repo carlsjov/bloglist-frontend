@@ -49,6 +49,15 @@ const App = () => {
     }
   }
 
+  const handleLogoff = async () => {
+    event.preventDefault()
+    console.log('logging off', user)
+
+    window.localStorage.clear()
+
+    setUser(null)
+  }
+
   if (user === null) {
     return (
       <div>
@@ -82,6 +91,9 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <p>{user.name} logged in</p>
+      <form onSubmit={handleLogoff}>
+        <button type="submit">logout</button>
+      </form>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
