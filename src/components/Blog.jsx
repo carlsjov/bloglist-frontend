@@ -1,37 +1,37 @@
 import PropTypes from 'prop-types'
-
-const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
+//{ blog, likeBlog, deleteBlog, user }
+const Blog = (props) => {
   const handleLike = async (event) => {
     event.preventDefault()
-    console.log('liked', blog.title)
+    console.log('liked', props.blog.title)
 
     const likedBlog = {
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: (Number(blog.likes) + 1),
-      user: blog.user,
-      id: blog.id
+      title: props.blog.title,
+      author: props.blog.author,
+      url: props.blog.url,
+      likes: (Number(props.blog.likes) + 1),
+      user: props.blog.user,
+      id: props.blog.id
     }
-    likeBlog(likedBlog)
+    props.likeBlog(likedBlog)
   }
 
   const handleDelete = async (event) => {
     event.preventDefault()
-    if(window.confirm(`Do you want to delete blog ${blog.title}?`)) {
-      console.log('deleted:', blog.title)
-      deleteBlog(blog)
+    if(window.confirm(`Do you want to delete blog ${props.blog.title}?`)) {
+      console.log('deleted:', props.blog.title)
+      props.deleteBlog(props.blog)
     }
   }
 
-  if (blog.user.username === user.username) {
+  if (props.blog.user.username === props.user.username) {
     return (
       <div>
       <form>
-        <br/>title: {blog.title}<br/> 
-        author: {blog.author}<br/> 
-        likes: {blog.likes} <button onClick={handleLike}>like</button><br/>
-        user: {blog.user.name}<br/>
+        <br/>title: {props.blog.title}<br/> 
+        author: {props.blog.author}<br/> 
+        likes: {props.blog.likes} <button onClick={handleLike}>like</button><br/>
+        user: {props.blog.user.name}<br/>
         <button onClick={handleDelete}>delete</button>
       </form>
     </div>  
@@ -40,20 +40,20 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
   return (
     <div>
       <form onSubmit={handleLike}>
-      <br/>title: {blog.title}<br/> 
-        author: {blog.author}<br/> 
-        likes: {blog.likes} <button onClick={handleLike}>like</button><br/>
-        user: {blog.user.name}<br/>
+      <br/>title: {props.blog.title}<br/> 
+        author: {props.blog.author}<br/> 
+        likes: {props.blog.likes} <button onClick={handleLike}>like</button><br/>
+        user: {props.blog.user.name}<br/>
       </form>
     </div>  
   )
 }
 
 Blog.propTypes = {
-  blog: PropTypes.array.isRequired,
+  blog: PropTypes.object.isRequired,
   likeBlog: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
-  user: PropTypes.array.isRequired 
+  user: PropTypes.object.isRequired 
 }
 
 export default Blog
