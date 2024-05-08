@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
   const handleLike = async (event) => {
     event.preventDefault()
@@ -45,6 +47,13 @@ const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
       </form>
     </div>  
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.array.isRequired,
+  likeBlog: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
+  user: PropTypes.array.isRequired 
 }
 
 export default Blog
