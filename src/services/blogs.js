@@ -22,4 +22,12 @@ const create = async newBlog => {
   return response.data
 }
 
-export default { getAll, create, setToken }
+const like = async likeBlog => {
+  const id = likeBlog.id
+  const url = baseUrl.concat(`/${id}`)
+  const response = await axios.put(url, likeBlog)
+  return response.data
+}
+
+
+export default { getAll, create, setToken, like }
