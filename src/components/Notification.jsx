@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 const Notification =(props) => {
-    if(props.message === null) {
+    if(props.message === "") {
         return null
     }
 
@@ -23,7 +23,6 @@ const Notification =(props) => {
 }
 
 Notification.propTypes = {
-    message: PropTypes.string.isRequired,
     code: PropTypes.string.isRequired
 }
 

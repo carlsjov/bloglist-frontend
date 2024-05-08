@@ -11,7 +11,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrormessage] = useState(null)
+  const [errorMessage, setErrormessage] = useState('')
   const [errorCode, setErrorCode] = useState('')
   const blogFormRef = useRef()
 

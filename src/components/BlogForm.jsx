@@ -28,7 +28,7 @@ const BlogForm = ({ createBlog, setErrorCode, setErrormessage }) => {
         setErrorCode("2")
         setErrormessage('Made new blog!')
         setTimeout(() => {
-          setErrormessage(null)
+          setErrormessage('')
           setErrorCode('')
         }, 5000)
       }
