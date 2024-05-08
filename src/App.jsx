@@ -44,6 +44,7 @@ const App = () => {
       )
 
       setUser(user)
+      console.log(user)
       blogService.setToken(user.token)
       setUsername('')
       setPassword('')
@@ -68,8 +69,21 @@ const App = () => {
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
+    const add = {
+      title: blogObject.title,
+      author: blogObject.author,
+      url: blogObject.url,
+      likes: blogObject.likes,
+      id: '',
+      user: {
+        username: user.username,
+        name: user.name
+      }
+    }
+
     blogService.create(blogObject).then(returned => {
-      setBlogs(blogs.concat(returned))
+      add.id = returned.id
+      setBlogs(blogs.concat(add))
     })
   }
 
@@ -77,6 +91,14 @@ const App = () => {
     const likedId = blogObject.id
     blogService.like(blogObject).then(returned => {
       setBlogs(blogs.map(n => n.id === likedId ? blogObject : n))
+    })
+  }
+
+  const deleteBlog = (blogObject) => {
+    const deletedBlog = blogObject.id
+    console.log(blogs.filter(n => n.id !== deletedBlog))
+    blogService.del(blogObject).then(returned => {
+      setBlogs(blogs.filter(n => n.id !== deletedBlog))
     })
   }
 
@@ -122,7 +144,7 @@ const App = () => {
         <BlogForm createBlog={addBlog} setErrormessage={setErrormessage} setErrorCode={setErrorCode} />
       </Togglable>
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} likeBlog={likeBlog}/>
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} deleteBlog={deleteBlog} user={user}/>
       )}
     </div>
   )

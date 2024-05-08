@@ -29,5 +29,12 @@ const like = async likeBlog => {
   return response.data
 }
 
+const del = async deleteBlog => {
+  const id = deleteBlog.id
+  const url = baseUrl.concat(`/${id}`)
+  const response = await axios.delete(url, deleteBlog)
+  return response.data
+}
 
-export default { getAll, create, setToken, like }
+
+export default { getAll, create, setToken, like, del }

@@ -1,5 +1,4 @@
-const Blog = ({ blog, likeBlog }) => {
-  
+const Blog = ({ blog, likeBlog, deleteBlog, user }) => {
   const handleLike = async (event) => {
     event.preventDefault()
     console.log('liked', blog.title)
@@ -15,10 +14,34 @@ const Blog = ({ blog, likeBlog }) => {
     likeBlog(likedBlog)
   }
 
+  const handleDelete = async (event) => {
+    event.preventDefault()
+    if(window.confirm(`Do you want to delete blog ${blog.title}?`)) {
+      console.log('deleted:', blog.title)
+      deleteBlog(blog)
+    }
+  }
+
+  if (blog.user.username === user.username) {
+    return (
+      <div>
+      <form>
+        <br/>title: {blog.title}<br/> 
+        author: {blog.author}<br/> 
+        likes: {blog.likes} <button onClick={handleLike}>like</button><br/>
+        user: {blog.user.name}<br/>
+        <button onClick={handleDelete}>delete</button>
+      </form>
+    </div>  
+    )
+  }
   return (
     <div>
       <form onSubmit={handleLike}>
-        {blog.title} {blog.author} {blog.likes} <button type="submit">like</button>
+      <br/>title: {blog.title}<br/> 
+        author: {blog.author}<br/> 
+        likes: {blog.likes} <button onClick={handleLike}>like</button><br/>
+        user: {blog.user.name}<br/>
       </form>
     </div>  
   )
